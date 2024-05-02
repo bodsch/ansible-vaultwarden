@@ -1,0 +1,8 @@
+---
+
+vaultwarden_packages:
+  - vaultwarden
+  - vaultwarden-openrc
+  - pigeonhole
+
+...

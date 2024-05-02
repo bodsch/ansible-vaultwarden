@@ -1,0 +1,66 @@
+---
+
+- name: include OS specific configuration
+  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      paths:
+        - "vars"
+      files:
+        # eg. debian-10 / ubuntu-20 / centos-8 / oraclelinux-8
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml"
+        # eg. archlinux-systemd / archlinux-openrc
+        - "{{ ansible_distribution | lower }}-{{ ansible_service_mgr | lower }}.yml"
+        # eg. debian / ubuntu / centos / oraclelinux
+        - "{{ ansible_distribution | lower }}.yml"
+        # eg. redhat / debian
+        - "{{ ansible_os_family | lower }}.yml"
+        # artixlinux
+        - "{{ ansible_os_family | lower | replace(' ', '') }}.yml"
+        # artixlinux-openrc
+        - "{{ ansible_distribution | lower | replace(' ', '') }}-{{ ansible_service_mgr | lower }}.yml"
+        - default.yml
+      skip: true
+
+- name: python3-apt for debian
+  when:
+    - ansible_os_family | lower == 'debian'
+  block:
+    - name: make sure python3-apt is installed (only debian based)
+      ansible.builtin.package:
+        name:
+          - python3-apt
+        state: present
+      register: _installed
+
+    - name: update apt cache
+      when:
+        - _installed.changed
+      block:
+        - name: clean apt cache  # noqa command-instead-of-module
+          ansible.builtin.command: |
+            apt-get clean
+          register: apt_clean
+          changed_when: apt_clean.rc != 0
+          failed_when: apt_clean.rc != 0
+          when: "ansible_version.full is version_compare('2.13', '<')"
+
+        - name: clean apt cache
+          ansible.builtin.apt:
+            clean: true
+          when: "ansible_version.full is version_compare('2.13', '>=')"
+
+- name: detect docker environment
+  ansible.builtin.set_fact:
+    is_docker_guest: "{{
+      ansible_virtualization_role | default('host') == 'guest' and
+      ansible_virtualization_type | default('none') == 'docker' }}"
+
+- name: install dependencies
+  ansible.builtin.package:
+    name: "{{ vaultwarden_dependencies }}"
+    state: present
+  when:
+    - vaultwarden_dependencies | default([]) | count > 0
+
+...

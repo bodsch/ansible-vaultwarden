@@ -1,0 +1,20 @@
+[Unit]
+Description           = Vaultwarden API server
+After                 = network.target
+
+[Service]
+Type                  = simple
+User                  = vaultwarden
+ExecStart             = /usr/bin/vaultwarden
+PrivateTmp            = true
+PrivateDevices        = true
+ProtectHome           = true
+ProtectSystem         = strict
+WorkingDirectory      = /etc/vaultwarden
+ReadWriteDirectories  = /var/lib/vaultwarden
+ReadWriteDirectories  = {{ vaultwarden_config.logging.log_file | dirname }}
+EnvironmentFile       = /etc/vaultwarden/config.env
+
+[Install]
+WantedBy              = multi-user.target
+
