@@ -1,8 +1,8 @@
 ---
 
 vaultwarden_config:
-  directories:
-    data: /var/lib/vaultwarden
+  #directories:
+  #  data: /var/lib/vaultwarden
   templates:
     reload_enabled: true
   web_vault:

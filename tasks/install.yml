@@ -88,15 +88,20 @@
     - vaultwarden
     - vaultwarden_install
 
+
+- name: merge vaultwarden configuration between defaults and custom
+  ansible.builtin.set_fact:
+    vaultwarden_config: "{{ vaultwarden_defaults_config | combine(vaultwarden_config, recursive=True) }}"
+
 - name: vaultwarden web
   when:
     - vaultwarden_config.web_vault.enabled | default('false') | bool
     - vaultwarden_config.directories.web_vault is defined
-    - vaultwarden_config.directories.web_vault | string | leength > 0
+    - vaultwarden_config.directories.web_vault | string | length > 0
   block:
     - name: download vaultwarden web
       ansible.builtin.unarchive:
-        src: "https://github.com/dani-garcia/bw_web_builds/releases/download/v{{ vaultwarden_webvault_target_version }}/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
+        src: "https://github.com/dani-garcia/bw_web_builds/releases/download/v{{ vaultwarden_webvault.version }}/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
         dest: "{{ vaultwarden_config.directories.web_vault }}"
         remote_src: true
         owner: vaultwarden

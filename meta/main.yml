@@ -26,10 +26,8 @@ galaxy_info:
         - focal
         # 22.04 LTS (Jammy Jellyfish)
         - jammy
-        # 22.10 (Kinetic Kudu)
-        # - kinetic
         # 23.04 (Lunar Lobster)
-        # - lunar
+        - lunar
 
   galaxy_tags: []
 
