@@ -15,7 +15,7 @@ defaults:
     working-directory: 'ansible-vaultwarden'
 
 jobs:
-  deb:
+  debian:
     name: "${{ matrix.image }} / ansible: ${{ matrix.ansible-version }}, scenario: ${{ matrix.scenario }}"
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'schedule' || github.event.workflow_run.conclusion == 'success' }}
@@ -23,12 +23,15 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - debian:11
+          - debian:12
         python_version:
           - "3.10.11"
           - "3.11.3"
+          - "3.12.3"
         ansible-version:
           - '6.7'
+          - '7.0'
+          - '9.3'
         scenario:
           - configured
     steps:
