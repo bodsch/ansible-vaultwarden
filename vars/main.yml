@@ -15,7 +15,7 @@ vaultwarden_defaults_config:
     sends: ""                                     # data/sends
     tmp: ""                                       # data/tmp
     templates: ""                                 # data/templates
-    web_vault: /usr/share/vaultwarden/web-vault/  # /usr/share/vaultwarden/web-vault/
+    web_vault: /usr/share/vaultwarden             # /usr/share/vaultwarden/web-vault/
   templates:
     reload_enabled: false
   web_vault:
