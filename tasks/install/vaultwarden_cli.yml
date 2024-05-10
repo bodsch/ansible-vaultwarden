@@ -108,3 +108,5 @@
       ansible.builtin.file:
         state: absent
         path: "/etc/ansible/facts.d/vaultwarden_cli.fact"
+
+...

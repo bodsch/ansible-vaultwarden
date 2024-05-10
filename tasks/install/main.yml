@@ -15,7 +15,6 @@
   ansible.builtin.set_fact:
     vaultwarden_config: "{{ vaultwarden_defaults_config | combine(vaultwarden_config, recursive=True) }}"
 
-
 # debian based
 #
 - name: debian based
