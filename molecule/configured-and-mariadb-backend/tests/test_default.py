@@ -10,7 +10,7 @@ import testinfra.utils.ansible_runner
 
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
-    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
+    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('instance')
 
 
 def pp_json(json_thing, sort=True, indents=2):
@@ -100,10 +100,6 @@ def get_vars(host):
 @pytest.mark.parametrize("dirs", [
     "/etc/vaultwarden",
     "/var/lib/vaultwarden",
-    "/var/lib/vaultwarden/attachments",
-    "/var/lib/vaultwarden/icon_cache",
-    "/var/lib/vaultwarden/sends",
-    "/var/lib/vaultwarden/tmp",
     "/var/log/vaultwarden"
 ])
 def test_directories(host, dirs):
@@ -113,9 +109,6 @@ def test_directories(host, dirs):
 
 @pytest.mark.parametrize("files", [
     "/etc/vaultwarden/config.env",
-    "/var/lib/vaultwarden/db.sqlite3",
-    "/var/lib/vaultwarden/rsa_key.pem",
-    "/var/lib/vaultwarden/rsa_key.pub.pem",
 ])
 def test_files(host, files):
     f = host.file(files)

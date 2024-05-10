@@ -100,6 +100,10 @@ def get_vars(host):
 @pytest.mark.parametrize("dirs", [
     "/etc/vaultwarden",
     "/var/lib/vaultwarden",
+    "/var/lib/vaultwarden/attachments",
+    "/var/lib/vaultwarden/icon_cache",
+    "/var/lib/vaultwarden/sends",
+    "/var/lib/vaultwarden/tmp",
     "/var/log/vaultwarden"
 ])
 def test_directories(host, dirs):
@@ -109,6 +113,9 @@ def test_directories(host, dirs):
 
 @pytest.mark.parametrize("files", [
     "/etc/vaultwarden/config.env",
+    "/var/lib/vaultwarden/db.sqlite3",
+    "/var/lib/vaultwarden/rsa_key.pem",
+    "/var/lib/vaultwarden/rsa_key.pub.pem",
 ])
 def test_files(host, files):
     f = host.file(files)

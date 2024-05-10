@@ -1,6 +1,6 @@
 ---
 
-name: vaultwaren with simple configuration
+name: vaultwarden with mariadb backend
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ defaults:
     working-directory: 'ansible-vaultwarden'
 
 jobs:
-  debian:
+  arch:
     name: "${{ matrix.image }} / ansible: ${{ matrix.ansible-version }}, scenario: ${{ matrix.scenario }}"
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'schedule' || github.event.workflow_run.conclusion == 'success' }}
@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - debian:12
+          - archlinux:latest
         python_version:
           - "3.10.11"
           - "3.11.3"
@@ -33,7 +33,7 @@ jobs:
           - '7.0'
           - '9.3'
         scenario:
-          - configured
+          - configured-and-mariadb-backend
     steps:
       - name: check out the codebase.
         uses: actions/checkout@v4

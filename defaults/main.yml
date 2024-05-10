@@ -3,7 +3,9 @@
 vaultwarden_webvault:
   version: 2024.3.1
 
-# vaultwarden_logging_directory: /var/log/vaultwarden
+vaultwarden_cli:
+  state: absent
+  version: 1.10.1
 
 vaultwarden_service:
   state: started

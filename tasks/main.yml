@@ -1,18 +1,5 @@
 ---
 
-# - name: merge vaultwarden configuration between defaults and custom
-#   ansible.builtin.set_fact:
-#     vaultwarden_config: "{{ vaultwarden_defaults_config | combine(vaultwarden_config, recursive=True) }}"
-#
-# - name: create vaultwarden web directory
-#   ansible.builtin.file:
-#     state: directory
-#     path: "{{ vaultwarden_config.directories.web_vault | web_vault_directory(vaultwarden_webvault.version) }}"
-#     owner: vaultwarden
-#     group: vaultwarden
-#     mode: 0775
-
-
 - name: prepare
   ansible.builtin.include_tasks: prepare.yml
 

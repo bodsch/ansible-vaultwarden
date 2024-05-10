@@ -43,7 +43,11 @@ SystemCallArchitectures = native
 WorkingDirectory        = /var/lib/vaultwarden
 ReadWriteDirectories    = /var/lib/vaultwarden
 ReadWriteDirectories    = {{ vaultwarden_config.logging.log_file | dirname }}
-ReadWriteDirectories    = /usr/share/vaultwarden/web-vault/
+{% if vaultwarden_config.web_vault.enabled is defined and
+      vaultwarden_config.web_vault.enabled | string | length > 0 and
+      vaultwarden_config.web_vault.enabled | bool == True %}
+ReadWriteDirectories    = {{ vaultwarden_config.directories.web_vault }}/web-vault
+{% endif %}
 
 [Install]
 WantedBy              = multi-user.target

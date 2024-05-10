@@ -39,6 +39,22 @@
         vaultwarden_web_installed: "{{ vaultwarden_web_version_file.stat.exists }}"
         vaultwarden_web_version: "{{ _vaultwarden_web_version.get('content', '') | b64decode }}"
 
+- name: detect installed vaultwarden cli
+  block:
+    - name: detect if vaultwarden cli exists
+      ansible.builtin.stat:
+        path: "{{ vaultwarden_config.directories.data }}/rbw"
+      register: vaultwarden_cli_version_directory
+
+    - name: detect if vaultwarden cli exists
+      ansible.builtin.stat:
+        path: "{{ vaultwarden_config.directories.data }}/rbw_{{ vaultwarden_cli.version }}/rbw"
+      register: vaultwarden_cli_version_file
+
+    - name: define vaultwarden_cli_installed
+      ansible.builtin.set_fact:
+        vaultwarden_cli_installed: "{{ vaultwarden_cli_version_file.stat.exists }}"
+
 # debian based
 #
 - name: debian based
@@ -96,7 +112,7 @@
     - vaultwarden_install
 
 - name: create the systemd service file
-  when:
+  when:                             .github/workflows/configured-with-mariadb.yml
     - ansible_service_mgr | lower == "systemd"
   ansible.builtin.template:
     src: init/systemd/vaultwarden.service.j2
@@ -118,10 +134,6 @@
   tags:
     - vaultwarden
     - vaultwarden_install
-
-- name: d
-  debug:
-    msg: "{{ vaultwarden_web_version_directory }}"
 
 - name: assert broken database configuration
   ansible.builtin.assert:
@@ -161,12 +173,10 @@
 
     - name: install vaultwarden web
       ansible.builtin.unarchive:
-       #      https://github.com/dani-garcia/bw_web_builds/releases/download/v2024.3.1/bw_web_v2024.3.1.tar.gz
-       #      https://github.com/dani-garcia/bw_web_builds/releases/download/v2024.3.1/bw_web_v2024.3.1.tar.gz,
-        src: "https://github.com/dani-garcia/bw_web_builds/releases/download/v{{ vaultwarden_webvault.version }}/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
+        src: "/tmp/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
         dest: "{{ vaultwarden_config.directories.web_vault }}/{{ vaultwarden_webvault.version }}/"
         remote_src: true
-        owner: vaultwarden
+        owner: vaultwarden         .github/workflows/configured-with-mariadb.yml
         group: vaultwarden
 
     - name: remove older web-vault directory
@@ -190,5 +200,98 @@
         facts:
           version: "{{ vaultwarden_webvault.version }}"
 
+
+- name: vaultwarden cli
+  when:
+    - vaultwarden_cli.state | default('absent') in ["absent", "present"]
+    - vaultwarden_cli.state | default('absent') == "present"
+    - vaultwarden_cli_version_directory.stat.isdir | default('false') or
+      not vaultwarden_cli_installed
+  block:
+    - name: download vaultwarden cli
+      become: true
+      ansible.builtin.get_url:
+        # https://github.com/doy/rbw/releases/download/1.10.1/rbw_1.10.1_linux_amd64.tar.gz
+        url: "https://github.com/doy/rbw/releases/download/{{ vaultwarden_cli.version }}/rbw_{{ vaultwarden_cli.version }}_linux_amd64.tar.gz"
+        dest: /tmp/
+        mode: 0644
+        validate_certs: false
+      register: _download
+      until: _download is succeeded
+      retries: 5
+      delay: 2
+      check_mode: false
+
+    - name: create vaultwarden cli directory
+      ansible.builtin.file:
+        state: directory
+        path: "{{ vaultwarden_config.directories.data }}/rbw_{{ vaultwarden_cli.version }}"
+        owner: vaultwarden
+        group: vaultwarden
+        mode: 0775
+
+    - name: install vaultwarden cli
+      ansible.builtin.unarchive:
+        src: "/tmp/rbw_{{ vaultwarden_cli.version }}_linux_amd64.tar.gz"
+        dest: "{{ vaultwarden_config.directories.data }}/rbw_{{ vaultwarden_cli.version }}/"
+        remote_src: true
+        owner: vaultwarden
+        group: vaultwarden
+
+    - name: create link for cli client
+      ansible.builtin.file:
+        src: "{{ vaultwarden_config.directories.data }}/rbw_{{ vaultwarden_cli.version }}/rbw"
+        dest: "{{ vaultwarden_config.directories.data }}/rbw"
+        state: link
+        owner: vaultwarden
+        group: vaultwarden
+        force: true
+        follow: false
+
+    - name: create cli configuration directory
+      ansible.builtin.file:
+        state: directory
+        path: "${HOME}/.config/rbw"
+        mode: 0750
+
+    - name: create cli configuration
+      ansible.builtin.template:
+        src: etc/rbw/config.json.j2
+        dest: "${HOME}/.config/rbw/config.json"
+        backup: true
+        mode: 0644
+
+    - name: create custom fact file
+      bodsch.core.facts:
+        name: vaultwarden_cli
+        facts:
+          version: "{{ vaultwarden_cli.version }}"
+
+- name: remove vaultwarden cli
+  when:
+    - vaultwarden_cli.state | default('absent') == "absent"
+    # - vaultwarden_cli_installed
+  block:
+    - name: remove link for cli client
+      ansible.builtin.file:
+        path: "{{ vaultwarden_config.directories.data }}/rbw"
+        state: absent
+        force: true
+
+    - name: remove cli client
+      ansible.builtin.file:
+        path: "{{ vaultwarden_config.directories.data }}/rbw_{{ vaultwarden_cli.version }}"
+        state: absent
+        force: true
+
+    - name: remove cli configuration
+      ansible.builtin.file:
+        state: absent
+        path: "${HOME}/.config/rbw"
+
+    - name: remove custom fact file
+      ansible.builtin.file:
+        state: absent
+        path: "/etc/ansible/facts.d/vaultwarden_cli.fact"
 
 ...
