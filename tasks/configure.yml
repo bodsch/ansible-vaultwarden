@@ -29,6 +29,13 @@
   ansible.builtin.set_fact:
     vaultwarden_config: "{{ vaultwarden_defaults_config | combine(vaultwarden_config, recursive=True) }}"
 
+- name: assert broken database configuration
+  ansible.builtin.assert:
+    that:
+      - vaultwarden_config.database.url | supported_databases(ansible_distribution, ansible_os_family)
+    msg: "This version of vaultwarden currently only supports one sqlite database!\nPlease change your configuration."
+    quiet: true
+
 - name: create logging directory
   ansible.builtin.file:
     state: directory
