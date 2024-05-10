@@ -45,7 +45,7 @@
           failed_when: apt_clean.rc != 0
           when: "ansible_version.full is version_compare('2.13', '<')"
 
-        - name: clean apt cache
+        - name: clean apt cache  # noqa no-handler
           ansible.builtin.apt:
             clean: true
           when: "ansible_version.full is version_compare('2.13', '>=')"

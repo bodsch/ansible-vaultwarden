@@ -80,7 +80,7 @@
         mode: 0644
       register: vaultwarden_repo_source
 
-    - name: update package cache
+    - name: update package cache  # noqa no-handler
       become: true
       ansible.builtin.package:
         update_cache: true
@@ -112,7 +112,7 @@
     - vaultwarden_install
 
 - name: create the systemd service file
-  when:                             .github/workflows/configured-with-mariadb.yml
+  when:
     - ansible_service_mgr | lower == "systemd"
   ansible.builtin.template:
     src: init/systemd/vaultwarden.service.j2

@@ -4,4 +4,3 @@ database_user: vaultwarden
 database_hostname: database
 database_port: 3306
 database_schema: vaultwarden
-
