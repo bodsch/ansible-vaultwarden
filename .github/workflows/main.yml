@@ -14,7 +14,7 @@ defaults:
 
 jobs:
   arch:
-    name: "${{ matrix.image }} / ansible: ${{ matrix.ansible-version }}, scenario: ${{ matrix.scenario }}"
+    name: "${{ matrix.image }} / python: ${{ matrix.python_version }} / ansible: ${{ matrix.ansible-version }}"
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'schedule' || github.event.workflow_run.conclusion == 'success' }}
     strategy:
@@ -60,7 +60,7 @@ jobs:
           DISTRIBUTION: ${{ matrix.image }}
 
   debian:
-    name: "${{ matrix.image }} / ansible: ${{ matrix.ansible-version }}, scenario: ${{ matrix.scenario }}"
+    name: "${{ matrix.image }} / python: ${{ matrix.python_version }} / ansible: ${{ matrix.ansible-version }}"
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'schedule' || github.event.workflow_run.conclusion == 'success' }}
     strategy:
