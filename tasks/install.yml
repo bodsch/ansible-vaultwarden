@@ -176,7 +176,7 @@
         src: "/tmp/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
         dest: "{{ vaultwarden_config.directories.web_vault }}/{{ vaultwarden_webvault.version }}/"
         remote_src: true
-        owner: vaultwarden         .github/workflows/configured-with-mariadb.yml
+        owner: vaultwarden
         group: vaultwarden
 
     - name: remove older web-vault directory
@@ -199,7 +199,6 @@
         name: vaultwarden_web
         facts:
           version: "{{ vaultwarden_webvault.version }}"
-
 
 - name: vaultwarden cli
   when:
