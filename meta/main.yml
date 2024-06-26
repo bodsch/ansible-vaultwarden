@@ -8,7 +8,7 @@ galaxy_info:
   description: ansible role to install and configure vaultwarden
 
   license: Apache
-  min_ansible_version: "2.9"
+  min_ansible_version: "8.5"
 
   platforms:
     - name: ArchLinux
@@ -25,7 +25,11 @@ galaxy_info:
     #     # 23.04 (Lunar Lobster)
     #     - lunar
 
-  galaxy_tags: []
+  galaxy_tags:
+    - security
+    - password
+    - vault
+    - vaultwarden
 
 dependencies: []
 
