@@ -88,11 +88,11 @@ vaultwarden_config:
     emergency_notification_reminder_schedule: ""  # "0 3 * * * *"
     emergency_request_timeout_schedule: ""        # "0 7 * * * *"
     event_cleanup_schedule: ""                    # "0 10 0 * * *"
-    events_days_retain: ""                        
+    events_days_retain: ""                        #
     auth_request_purge_schedule: ""               # "30 * * * * *"
   global:
     disable_icon_download: ""                     # false
-    domain: ""                                    
+    domain: ""
     email_change_allowed: ""                      # true
     emergency_access_allowed: ""                  # true
     hibp_api_key: ""
@@ -103,18 +103,18 @@ vaultwarden_config:
     invitations_allowed: ""                       # true
     org:
       attachment_limit: ""
-      creation_users: ""                          # none / admin1@example.com,admin2@example.com
+      creation_users: []                          # none / admin1@example.com,admin2@example.com
       events_enabled: ""                          # false
-    password:                                     
+    password:
       hints_allowed: ""                           # true
       iterations: ""                              # 600000
-    sends_allowed: true                           
+    sends_allowed: true
     show_password_hint: ""                        # false
-    signups:                                      
+    signups:
       allowed: ""                                 # true
-      domains_whitelist: ""                       # example.com,example.net,example.org
+      domains_whitelist: []                       # example.com,example.net,example.org
       verify: ""                                  # false
-      verify_resend:                              
+      verify_resend:
         limit: ""                                 # 6
         time: ""                                  # 3600
     trash_auto_delete_days: ""                    #
@@ -127,7 +127,7 @@ vaultwarden_config:
     use_syslog: false
     log_file: /var/log/vaultwarden/vaultwarden.log
     # Valid values are "trace", "debug", "info", "warn", "error" and "off"
-    log_level: info                               
+    log_level: info
   smtp:
     host: ""                                      # smtp.domain.tld
     from: ""                                      # vaultwarden@domain.tld
@@ -139,7 +139,7 @@ vaultwarden_config:
     port: ""                                      # 587
     use_sendmail: ""                              # false
     sendmail_command: ""                          # "/path/to/sendmail"
-    auth_mechanism: ""                            # ["Plain", "Login", "Xoauth2"]
+    auth_mechanism: []                            # ["Plain", "Login", "Xoauth2"]
     helo_name: "" 
     embed_images: ""                              # true
     debug: ""                                     # false

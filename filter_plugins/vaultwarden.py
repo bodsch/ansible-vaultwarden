@@ -1,6 +1,6 @@
 # python 3 headers, required if submitting to Ansible
 
-# (c) 2021-2022, Bodo Schulz <bodo@boone-schulz.de>
+# (c) 2022-2024, Bodo Schulz <bodo@boone-schulz.de>
 # Apache (see LICENSE or https://opensource.org/licenses/Apache-2.0)
 
 from __future__ import (absolute_import, division, print_function)
