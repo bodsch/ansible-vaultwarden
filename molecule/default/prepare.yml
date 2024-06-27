@@ -13,16 +13,16 @@
         - name: update pacman system
           ansible.builtin.command: |
             pacman --refresh --sync --sysupgrade --noconfirm
-
-        - name: do facts module to get latest information
-          ansible.builtin.setup:
+          register: pacman
+          changed_when: pacman.rc != 0
+          failed_when: pacman.rc != 0
 
         - name: create depends service
           ansible.builtin.copy:
             mode: 0755
             dest: /etc/init.d/net
             content: |
-              #!/usr/sbin/openrc-run
+              #!/usr/bin/openrc-run
               true
           when:
             - ansible_os_family | lower == 'artix linux'

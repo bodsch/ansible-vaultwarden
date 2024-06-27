@@ -6,12 +6,12 @@ Ansible role to install and configure vaultwarden on various linux systems.
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bodsch/ansible-vaultwarden/main.yml?branch=main)][ci]
 [![GitHub issues](https://img.shields.io/github/issues/bodsch/ansible-vaultwarden)][issues]
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/bodsch/ansible-vaultwarden)][releases]
-[![Ansible Quality Score](https://img.shields.io/ansible/quality/50067?label=role%20quality)][quality]
+[![Ansible Downloads](https://img.shields.io/ansible/role/d/bodsch/vaultwarden?logo=ansible)][galaxy]
 
 [ci]: https://github.com/bodsch/ansible-vaultwarden/actions
 [issues]: https://github.com/bodsch/ansible-vaultwarden/issues?q=is%3Aopen+is%3Aissue
 [releases]: https://github.com/bodsch/ansible-vaultwarden/releases
-[quality]: https://galaxy.ansible.com/bodsch/vaultwarden
+[galaxy]: https://galaxy.ansible.com/ui/standalone/roles/bodsch/vaultwarden/
 
 
 ## Requirements & Dependencies

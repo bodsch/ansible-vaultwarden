@@ -52,6 +52,17 @@
   loop:
     - /etc/vaultwarden
 
+- name: validate smtp settings
+  ansible.builtin.set_fact:
+    vaultwarden_smtp_settings: "{{ vaultwarden_config.smtp | validate_smtp_settings() }}"
+
+- name: fail at wrong smtp settings
+  ansible.builtin.assert:
+    that:
+      - vaultwarden_smtp_settings.valid
+    msg: "Wrong SMTP Settings. {{ vaultwarden_smtp_settings.msg }}"
+    quiet: true
+
 - name: create vaultwarden config
   ansible.builtin.template:
     src: etc/vaultwarden/config.env.j2

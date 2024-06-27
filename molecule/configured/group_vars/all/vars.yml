@@ -19,7 +19,11 @@ vaultwarden_config:
     use_syslog: false
     log_file: /var/log/vaultwarden/vaultwarden.log
     log_level: info
-  smtp: {}
+  smtp:
+    host: "127.0.0.1"
+    from: "vault"
+    from_name: "Vaultwarden"
+    timeout: 25
   rocket:
     address: 127.0.0.1
     port: 8000
