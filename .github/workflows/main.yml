@@ -19,7 +19,7 @@ env:
 jobs:
   arch:
     name: "${{ matrix.image }}: (ansible ${{ matrix.ansible-version }}, python ${{ matrix.python_version }})"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'schedule' || github.event.workflow_run.conclusion == 'success' }}
     strategy:
       fail-fast: false
@@ -65,7 +65,7 @@ jobs:
 
   debian:
     name: "${{ matrix.image }}: (ansible ${{ matrix.ansible-version }}, python ${{ matrix.python_version }})"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'schedule' || github.event.workflow_run.conclusion == 'success' }}
     strategy:
       fail-fast: false
@@ -76,7 +76,7 @@ jobs:
           - "3.10"
           - "3.11"
         ansible-version:
-          - '6.7'
+          - '8.5'
         scenario:
           - default
     steps:
