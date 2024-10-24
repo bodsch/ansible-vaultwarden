@@ -3,6 +3,8 @@
 name: code linter
 
 on:
+  schedule:
+    - cron: "20 4 * * 0"
   workflow_dispatch:
     inputs:
       logLevel:
@@ -34,7 +36,7 @@ on:
       - "tasks/**"
 
 jobs:
-  pep8:
+  pycodestyle:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
