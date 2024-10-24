@@ -1,5 +1,12 @@
 ---
 
+vaultwarden_webvault:
+  version: 2024.6.2
+
+vaultwarden_cli:
+  state: present
+  version: 1.12.1
+
 vaultwarden_config:
   #directories:
   #  data: /var/lib/vaultwarden
@@ -14,14 +21,14 @@ vaultwarden_config:
   global:
     domain: "https://vault.molecule.lan"
   logging:
-    extended_logging: false
+    extended_logging: true
     log_timestamp_format: "%Y-%m-%d %H:%M:%S.%3f"
     use_syslog: false
     log_file: /var/log/vaultwarden/vaultwarden.log
-    log_level: info
+    log_level: debug
   smtp:
     host: "127.0.0.1"
-    from: "vault"
+    from: "vault@domain.tld"
     from_name: "Vaultwarden"
     timeout: 25
   rocket:

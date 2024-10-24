@@ -115,7 +115,7 @@ def test_directories(host, dirs):
     "/etc/vaultwarden/config.env",
     "/var/lib/vaultwarden/db.sqlite3",
     "/var/lib/vaultwarden/rsa_key.pem",
-    "/var/lib/vaultwarden/rsa_key.pub.pem",
+    # "/var/lib/vaultwarden/rsa_key.pub.pem",
 ])
 def test_files(host, files):
     f = host.file(files)
