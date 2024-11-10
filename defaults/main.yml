@@ -1,5 +1,15 @@
 ---
 
+vaultwarden_release: {}
+#   web:
+#     download_url: https://github.com/dani-garcia/bw_web_builds/releases
+#     file: "bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
+#     binary: web-vault
+#   cli:
+#     download_url: https://github.com/doy/rbw/releases
+#     file: "rbw_{{ vaultwarden_cli.version }}_linux_amd64.tar.gz"
+#     binary: rbw
+
 vaultwarden_webvault:
   version: 2024.6.2
 

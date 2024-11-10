@@ -50,7 +50,7 @@
     - name: download vaultwarden web
       become: true
       ansible.builtin.get_url:
-        url: "https://github.com/dani-garcia/bw_web_builds/releases/download/v{{ vaultwarden_webvault.version }}/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
+        url: "{{ vaultwarden_release.web.download_url }}/download/v{{ vaultwarden_webvault.version }}/{{ vaultwarden_release.web.file }}"
         dest: /tmp/
         mode: 0644
         validate_certs: false
@@ -62,7 +62,7 @@
 
     - name: install vaultwarden web
       ansible.builtin.unarchive:
-        src: "/tmp/bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
+        src: "/tmp/{{ vaultwarden_release.web.file }}"
         dest: "{{ vaultwarden_config.directories.web_vault }}/{{ vaultwarden_webvault.version }}/"
         remote_src: true
         owner: vaultwarden

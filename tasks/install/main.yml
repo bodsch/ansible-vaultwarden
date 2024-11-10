@@ -95,6 +95,10 @@
     - vaultwarden
     - vaultwarden_install
 
+- name: define download information
+  ansible.builtin.set_fact:
+    vaultwarden_release: "{{ vaultwarden_defaults_release | combine(vaultwarden_release, recursive=True) }}"
+
 - name: install vaultwarden web
   ansible.builtin.include_tasks: install/vaultwarden_web.yml
   when:

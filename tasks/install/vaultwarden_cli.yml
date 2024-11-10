@@ -27,7 +27,7 @@
       become: true
       ansible.builtin.get_url:
         # https://github.com/doy/rbw/releases/download/1.10.1/rbw_1.10.1_linux_amd64.tar.gz
-        url: "https://github.com/doy/rbw/releases/download/{{ vaultwarden_cli.version }}/rbw_{{ vaultwarden_cli.version }}_linux_amd64.tar.gz"
+        url: "{{ vaultwarden_release.cli.download_url }}/download/{{ vaultwarden_cli.version }}/{{ vaultwarden_release.cli.file }}"
         dest: /tmp/
         mode: 0644
         validate_certs: false
@@ -47,7 +47,7 @@
 
     - name: install vaultwarden cli
       ansible.builtin.unarchive:
-        src: "/tmp/rbw_{{ vaultwarden_cli.version }}_linux_amd64.tar.gz"
+        src: "/tmp/{{ vaultwarden_release.cli.file }}"
         dest: "{{ vaultwarden_config.directories.data }}/rbw_{{ vaultwarden_cli.version }}/"
         remote_src: true
         owner: vaultwarden

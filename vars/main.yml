@@ -116,6 +116,17 @@ vaultwarden_defaults_config:
       certs: ""
       key: ""
 
+vaultwarden_defaults_release:
+  web:
+    download_url: https://github.com/dani-garcia/bw_web_builds/releases
+    file: "bw_web_v{{ vaultwarden_webvault.version }}.tar.gz"
+    binary: web-vault
+
+  cli:
+    download_url: https://github.com/doy/rbw/releases
+    file: "rbw_{{ vaultwarden_cli.version }}_linux_amd64.tar.gz"
+    binary: rbw
+
 go_arch_map:
   x86_64: 'amd64'
   aarch64: 'arm64'
