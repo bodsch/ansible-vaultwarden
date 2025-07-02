@@ -3,6 +3,13 @@
 
 Ansible role to install and configure vaultwarden on various linux systems.
 
+
+
+> This role is currently being migrated to a [collection](https://github.com/bodsch/ansible-collection-vaultwarden).  
+> Please submit issues and pull requests against this collection!
+
+---
+
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bodsch/ansible-vaultwarden/main.yml?branch=main)][ci]
 [![GitHub issues](https://img.shields.io/github/issues/bodsch/ansible-vaultwarden)][issues]
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/bodsch/ansible-vaultwarden)][releases]
